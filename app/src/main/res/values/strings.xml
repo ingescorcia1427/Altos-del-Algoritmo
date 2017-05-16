@@ -1,5 +1,22 @@
 <resources>
     <string name="app_name">AltosDelAlgoritmo</string>
-    <string name="titulo_app">App Altos del Algoritmo</string>
+    <string name="titulo_app">APP Altos del Algoritmo</string>
     <string name="continuar">CONTINUAR</string>
+
+    <string name="registrar">Registrar Apartamento</string>
+    <string name="lista_apartamentos">Listado Apartamentos</string>
+    <string name="apto_sombra_balcon">Apartamentos con Sombra y Balcon</string>
+    <string name="apto_caro">Piso Apartamento más Costoso</string>
+    <string name="nom_m2_apto_grande">Apartamento con mayor tamaño</string>
+    <string name="promedio_tamano">Promedio Tamaño de Apartamentos</string>
+    <string name="titulo_registro">REGISTRAR APARTAMENTO</string>
+    <string name="titulo_listado">LISTADO APARTAMENTOS</string>
+    <string-array name="opciones_principal">
+        <item>@string/registrar</item>
+        <item>@string/lista_apartamentos</item>
+        <item>@string/apto_sombra_balcon</item>
+        <item>@string/apto_caro</item>
+        <item>@string/nom_m2_apto_grande</item>
+        <item>@string/promedio_tamano</item>
+    </string-array>
 </resources>
