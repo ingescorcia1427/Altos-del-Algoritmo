@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AltosDelAlgoritmo</string>
+    <string name="titulo_app">App Altos del Algoritmo</string>
+    <string name="continuar">CONTINUAR</string>
 </resources>
