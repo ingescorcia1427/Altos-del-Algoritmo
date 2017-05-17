@@ -19,4 +19,21 @@
         <item>@string/nom_m2_apto_grande</item>
         <item>@string/promedio_tamano</item>
     </string-array>
+
+    <string name="nomenclatura">Nomenclatura</string>
+    <string name="nom_a">A</string>
+    <string name="nom_b">B</string>
+    <string name="nom_c">C</string>
+    <string name="nom_d">D</string>
+    <string name="nom_e">E</string>
+    <string name="nom_f">F</string>
+    <string-array name="opc_nomenclatura">
+        <item>@string/nom_a</item>
+        <item>@string/nom_b</item>
+        <item>@string/nom_c</item>
+        <item>@string/nom_d</item>
+        <item>@string/nom_f</item>
+        <item>@string/nom_e</item>
+    </string-array>
+
 </resources>

@@ -22,7 +22,7 @@ public class Principal extends AppCompatActivity {
 
         lstprincipal = (ListView)findViewById(R.id.lstprincipal);
         opc = getResources().getStringArray(R.array.opciones_principal);
-        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, opc);
+        adapter = new ArrayAdapter(this, R.layout.spinner_item_nomenclatura, opc);
         lstprincipal.setAdapter(adapter);
 
         lstprincipal.setOnItemClickListener(new AdapterView.OnItemClickListener() {
