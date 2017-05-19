@@ -3,17 +3,19 @@
     <string name="titulo_app">APP Altos del Algoritmo</string>
     <string name="continuar">CONTINUAR</string>
 
-    <string name="lista_apartamentos">Listado Apartamentos</string>
-    <string name="apto_sombra_balcon">Apartamentos con Sombra y Balcon</string>
-    <string name="apto_caro">Piso Apartamento más Costoso</string>
-    <string name="nom_m2_apto_grande">Apartamento con mayor tamaño</string>
-    <string name="promedio_tamano">Promedio Tamaño de Apartamentos</string>
+    <string name="registro_apto">1. Registro de Apartamentos</string>
+    <string name="lista_apartamentos">2. Listado Apartamentos</string>
+    <string name="apto_sombra_balcon">3. Apartamentos con Sombra y Balcon</string>
+    <string name="apto_caro">4. Piso Apartamento más Costoso</string>
+    <string name="nom_m2_apto_grande">5. Apartamento con mayor tamaño</string>
+    <string name="promedio_tamano">6. Promedio Tamaño de Apartamentos</string>
+
+
     <string name="titulo_registro">REGISTRAR APARTAMENTO</string>
     <string name="titulo_listado">LISTADO APARTAMENTOS</string>
-    <string name="registrar">REGISTRAR</string>
 
     <string-array name="opciones_principal">
-        <item>@string/titulo_registro</item>
+        <item>@string/registro_apto</item>
         <item>@string/lista_apartamentos</item>
         <item>@string/apto_sombra_balcon</item>
         <item>@string/apto_caro</item>
@@ -44,5 +46,17 @@
         <item>@string/nom_f</item>
         <item>@string/nom_e</item>
     </string-array>
+
+    <string name="registro_exitoso">Apartamento registrado exitosamente</string>
+    <string name="validar_nomenclatura">Por favor, dígite Nomenclatura</string>
+    <string name="validar_tamano">Por favor, dígite Tamaño</string>
+    <string name="validar_caracteristica">Debe seleccionar una o más Características</string>
+    <string name="validar_precio">Por favor, dígite el Precio</string>
+
+    <string name="registrar">REGISTRAR</string>
+    <string name="eliminar">ELIMINAR</string>
+    <string name="buscar">BUSCAR</string>
+    <string name="modificar">MODIFICAR</string>
+    <string name="limpiar">LIMPIAR</string>
 
 </resources>

@@ -36,7 +36,7 @@ public class AdaptadorApartamento extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return Long.parseLong(apartamento.get(position).getNomenclatura());
+        return Long.parseLong(apartamento.get(position).getNomenclatura() );
     }
 
     @Override
