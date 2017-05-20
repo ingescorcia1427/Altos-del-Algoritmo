@@ -56,20 +56,20 @@ public class Reportes extends AppCompatActivity {
     public String contarSB(){
         ArrayList<Apartamento> apartamentos;
         apartamentos=Datos.traerApartamento(getApplicationContext());
-        String mensaje,sombra,balcon,bl,sm;
+        String mensaje,sombra,balcon,con_bl,con_sm;
         int contb=0,conts=0,cont=0;
 
         for (int i=0; i<apartamentos.size();i++){
-            bl=res.getString(R.string.balcon);
-            sm=res.getString(R.string.sombra);
+            con_bl=res.getString(R.string.estado_si);
+            con_sm=res.getString(R.string.estado_si);
 
-            if (apartamentos.get(i).getCaracteristica().equals(bl)){
+            if (apartamentos.get(i).getCaracteristica().contains(con_bl)){
                 contb=contb+1;
             }
-            if (apartamentos.get(i).getCaracteristica().equals(sm)){
+            if (apartamentos.get(i).getCaracteristica().contains(con_sm)){
                 conts=conts+1;
             }
-            if (apartamentos.get(i).getCaracteristica().contains(bl) && apartamentos.get(i).getCaracteristica().contains(sm)){
+            if (apartamentos.get(i).getCaracteristica().contains(con_bl) && apartamentos.get(i).getCaracteristica().contains(con_sm)){
                 cont=cont+1;
             }
 

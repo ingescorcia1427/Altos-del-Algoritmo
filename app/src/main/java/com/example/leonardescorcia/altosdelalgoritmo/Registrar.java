@@ -1,5 +1,6 @@
 package com.example.leonardescorcia.altosdelalgoritmo;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -54,10 +55,6 @@ public class Registrar extends AppCompatActivity {
             cajaPrecio.requestFocus();
             return false;
         }
-
-        if (!chbBalcon.isChecked() && !chbSombra.isChecked()) {
-            new AlertDialog.Builder(this).setMessage(R.string.validar_caracteristica).show();
-        }
         return true;
     }
 
@@ -87,6 +84,7 @@ public class Registrar extends AppCompatActivity {
 
     public void limpiar() {
         cajaNomenclatura.setText("");
+        opc_piso.setSelection(0);
         cajaTamano.setText("");
         cajaPrecio.setText("");
         chbBalcon.setChecked(false);
@@ -99,7 +97,7 @@ public class Registrar extends AppCompatActivity {
     }
 
     public void guardar(View v) {
-        String nomenclatura, piso, tamano, caracteristica = "", precio;
+        String nomenclatura, piso, tamano, caracteristica="", precio;
         Apartamento ap;
 
         if (nomenclaturaExistente(v)) {
@@ -109,13 +107,11 @@ public class Registrar extends AppCompatActivity {
                 tamano = cajaTamano.getText().toString();
                 precio = cajaPrecio.getText().toString();
 
-                if (chbBalcon.isChecked()) {
-                    caracteristica = getResources().getString(R.string.balcon) + ", ";
-                }
-
-                if (chbSombra.isChecked()) {
-                    caracteristica = caracteristica + getResources().getString(R.string.sombra) + ", ";
-                }
+                if (chbBalcon.isChecked()) caracteristica = getResources().getString(R.string.estado_si);
+                else caracteristica = getResources().getString(R.string.estado_no);
+                if (chbSombra.isChecked()) caracteristica = getResources().getString(R.string.estado_si);
+                else caracteristica = getResources().getString(R.string.estado_no);
+                if ((!chbBalcon.isChecked()) && (!chbSombra.isChecked())) caracteristica = getResources().getString(R.string.estado_no);
 
                 caracteristica = caracteristica.substring(0, caracteristica.length() - 2);
                 ap = new Apartamento(nomenclatura, piso, tamano, caracteristica, precio);
@@ -130,9 +126,11 @@ public class Registrar extends AppCompatActivity {
     public void buscar(View v) {
         Apartamento apartamento;
         if (validarNomenclatura(v)) {
-            apartamento = Datos.buscarApartamentos(getApplicationContext(), cajaNomenclatura.getText().toString());
+            apartamento = Datos.buscarApartamentos(getApplicationContext(), cajaNomenclatura.getText().toString(),
+                    opc_piso.getSelectedItem().toString().trim());
             if (apartamento != null) {
                 cajaNomenclatura.setText(apartamento.getNomenclatura());
+                opc_piso.setSelection(Integer.parseInt(apartamento.getPiso()));
                 cajaPrecio.setText(apartamento.getPrecio());
                 if (apartamento.getCaracteristica().equalsIgnoreCase(res.getString(R.string.balcon)))
                     chbBalcon.setChecked(true);

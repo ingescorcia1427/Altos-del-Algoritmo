@@ -48,7 +48,7 @@ public class Datos {
         return apartamentos;
     }
 
-    public static Apartamento buscarApartamentos(Context contexto,String nom){
+    public static Apartamento buscarApartamentos(Context contexto, String nom, String pis){
 
         //Declarar variables
         SQLiteDatabase db;
@@ -59,7 +59,7 @@ public class Datos {
         ApartamentosSQLiteOpenHelper aux = new ApartamentosSQLiteOpenHelper(contexto, "DBApartamentos", null, 3);
         db = aux.getReadableDatabase();
 
-        sql="Select * from Apartamentos where nomenclatura ='"+nom+"'";
+        sql="Select * from Apartamentos where"+" nomenclatura ='"+nom+"', "+" piso ='"+pis+"'";
         Cursor c=db.rawQuery(sql,null);
 
         //Recorrido de cursor
