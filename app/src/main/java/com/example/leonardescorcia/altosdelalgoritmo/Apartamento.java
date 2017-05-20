@@ -81,21 +81,22 @@ public class Apartamento {
         db.close();
     }
 
-
-    public void contarSB(Context contexto){
-        SQLiteDatabase db;
+    public void modificar(Context contexto){
+        //declarar las variables
         String sql;
+        SQLiteDatabase db;
 
-        //Abrir la conexión de la base de datos en modo escritura
-        ApartamentosSQLiteOpenHelper aux = new ApartamentosSQLiteOpenHelper(contexto, "DBApartamentos", null, 3);
-        db = aux.getWritableDatabase();
+        //Abrir ña conexión de base de datos en modo escritura
+        ApartamentosSQLiteOpenHelper aux=new ApartamentosSQLiteOpenHelper(contexto,"DBApartamentos",null,3);
+        db=aux.getWritableDatabase();
 
-        //Insertar forma 1
-        sql = "SELECT caracteristica count(Sombra) as Cantidad FROM Apartamentos GROUP BY caracteristica";
-
+        sql="UPDATE Apartamentos SET piso ='"+this.getPiso()
+                +"',metros='"+this.getTamano()
+                +"',precio='"+this.getPrecio()
+                +"',balcon='"+this.getCaracteristica()
+                +"'where nomenclatura='"+this.getNomenclatura()+"'";
         db.execSQL(sql);
 
-        //Cerrar conexión
         db.close();
     }
 

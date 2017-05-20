@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,42 +26,42 @@ public class Registrar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar);
 
-        cajaNomenclatura = (EditText)findViewById(R.id.txtNomenclatura);
-        cajaTamano = (EditText)findViewById(R.id.txtTamano);
-        cajaPrecio = (EditText)findViewById(R.id.txtPrecio);
-        chbBalcon = (CheckBox)findViewById(R.id.chbBalcon);
-        chbSombra = (CheckBox)findViewById(R.id.chbSombra);
+        cajaNomenclatura = (EditText) findViewById(R.id.txtNomenclatura);
+        cajaTamano = (EditText) findViewById(R.id.txtTamano);
+        cajaPrecio = (EditText) findViewById(R.id.txtPrecio);
+        chbBalcon = (CheckBox) findViewById(R.id.chbBalcon);
+        chbSombra = (CheckBox) findViewById(R.id.chbSombra);
 
-        opc_piso = (Spinner)findViewById(R.id.spnPiso);
+        opc_piso = (Spinner) findViewById(R.id.spnPiso);
         opc = getResources().getStringArray(R.array.opc_nomenclatura);
         adapter = new ArrayAdapter(this, R.layout.spinner_item_opciones, opc);
         opc_piso.setAdapter(adapter);
     }
 
-    public boolean validartodo (){
-        if (cajaNomenclatura.getText().toString().isEmpty()){
+    public boolean validartodo() {
+        if (cajaNomenclatura.getText().toString().isEmpty()) {
             cajaNomenclatura.setError(this.getResources().getString(R.string.validar_nomenclatura));
             cajaNomenclatura.requestFocus();
             return false;
         }
-        if (cajaTamano.getText().toString().isEmpty()){
+        if (cajaTamano.getText().toString().isEmpty()) {
             cajaTamano.setError(this.getResources().getString(R.string.validar_tamano));
             cajaTamano.requestFocus();
             return false;
         }
-        if (cajaPrecio.getText().toString().isEmpty()){
+        if (cajaPrecio.getText().toString().isEmpty()) {
             cajaPrecio.setError(this.getResources().getString(R.string.validar_precio));
             cajaPrecio.requestFocus();
             return false;
         }
 
-        if (!chbBalcon.isChecked() && !chbSombra.isChecked()){
+        if (!chbBalcon.isChecked() && !chbSombra.isChecked()) {
             new AlertDialog.Builder(this).setMessage(R.string.validar_caracteristica).show();
         }
         return true;
     }
 
-    public boolean validarNomenclatura (View v) {
+    public boolean validarNomenclatura(View v) {
         if (cajaNomenclatura.getText().toString().isEmpty()) {
             cajaNomenclatura.setError(this.getResources().getString(R.string.validar_nomenclatura));
             cajaNomenclatura.requestFocus();
@@ -69,12 +70,12 @@ public class Registrar extends AppCompatActivity {
         return true;
     }
 
-    public boolean nomenclaturaExistente(View v){
+    public boolean nomenclaturaExistente(View v) {
         ArrayList<Apartamento> apartamentos;
-        apartamentos= Datos.traerApartamento(getApplicationContext());
-        for (int i=0;i < apartamentos.size();i++){
+        apartamentos = Datos.traerApartamento(getApplicationContext());
+        for (int i = 0; i < apartamentos.size(); i++) {
             if (apartamentos.get(i).getNomenclatura().equalsIgnoreCase(cajaNomenclatura.getText().toString()) &&
-                    apartamentos.get(i).getPiso().equalsIgnoreCase(opc_piso.getSelectedItem().toString().trim())){
+                    apartamentos.get(i).getPiso().equalsIgnoreCase(opc_piso.getSelectedItem().toString().trim())) {
                 new AlertDialog.Builder(this).setMessage(R.string.msj_nomenclatura_existe).show();
                 cajaNomenclatura.requestFocus();
                 return false;
@@ -84,7 +85,7 @@ public class Registrar extends AppCompatActivity {
         return true;
     }
 
-    public void limpiar(View v){
+    public void limpiar() {
         cajaNomenclatura.setText("");
         cajaTamano.setText("");
         cajaPrecio.setText("");
@@ -93,34 +94,88 @@ public class Registrar extends AppCompatActivity {
         cajaNomenclatura.requestFocus();
     }
 
-    public void guardar(View v){
-        String nomenclatura, piso, tamano, caracteristica="", precio;
+    public void borrar(View v) {
+        limpiar();
+    }
+
+    public void guardar(View v) {
+        String nomenclatura, piso, tamano, caracteristica = "", precio;
         Apartamento ap;
 
-        if (nomenclaturaExistente(v)){
-            if (validartodo()){
+        if (nomenclaturaExistente(v)) {
+            if (validartodo()) {
                 nomenclatura = cajaNomenclatura.getText().toString();
                 piso = opc_piso.getSelectedItem().toString().trim();
                 tamano = cajaTamano.getText().toString();
                 precio = cajaPrecio.getText().toString();
 
-                if(chbBalcon.isChecked()){
+                if (chbBalcon.isChecked()) {
                     caracteristica = getResources().getString(R.string.balcon) + ", ";
                 }
 
-                if(chbSombra.isChecked()){
+                if (chbSombra.isChecked()) {
                     caracteristica = caracteristica + getResources().getString(R.string.sombra) + ", ";
                 }
 
-                caracteristica = caracteristica.substring(0, caracteristica.length()-2);
+                caracteristica = caracteristica.substring(0, caracteristica.length() - 2);
                 ap = new Apartamento(nomenclatura, piso, tamano, caracteristica, precio);
                 ap.guardar(getApplicationContext());
 
                 new AlertDialog.Builder(this).setMessage(R.string.registro_exitoso).show();
-                limpiar(v);
-                 }
+                limpiar();
             }
         }
+    }
 
+    public void buscar(View v) {
+        Apartamento apartamento;
+        if (validarNomenclatura(v)) {
+            apartamento = Datos.buscarApartamentos(getApplicationContext(), cajaNomenclatura.getText().toString());
+            if (apartamento != null) {
+                cajaNomenclatura.setText(apartamento.getNomenclatura());
+                cajaPrecio.setText(apartamento.getPrecio());
+                if (apartamento.getCaracteristica().equalsIgnoreCase(res.getString(R.string.balcon)))
+                    chbBalcon.setChecked(true);
+                else chbBalcon.setChecked(true);
+
+                if (apartamento.getCaracteristica().equalsIgnoreCase(res.getString(R.string.sombra)))
+                    chbSombra.setChecked(true);
+                else chbSombra.setChecked(true);
+            }
+        }
+    }
+
+
+    public void modificar(View v) {
+        new AlertDialog.Builder(this).setMessage(R.string.msj_mantenimiento).setCancelable(true).show();
+    }
+
+    public void eliminar(View v) {
+        new AlertDialog.Builder(this).setMessage(R.string.msj_mantenimiento).setCancelable(true).show();
+    }
+
+        //Codigo de modificar
+        /*Apartamento a,a2;
+        String piso,tam,precio,balcon,sombra;
+        if (validarNomenclatura()){
+            a=Datos.buscarApartamentos(getApplicationContext(),cajaNomenclatura.getText().toString());
+            if (a!=null){
+                piso=opc_piso.getSelectedItem().toString().trim();
+                tam=cajaTamano.getText().toString();
+                precio=cajaPrecio.getText().toString();
+
+                if (chbBalcon.isChecked()) balcon=res.getString(R.string.balcon);
+                else balcon=res.getString(R.string.no_tiene_balcon);
+
+                if (chbSombra.isChecked())sombra=res.getString(R.string.sombra);
+                else sombra=res.getString(R.string.no_encuentra_sombra);
+
+                a2=new Apartamento(a.getNomenclatura(),piso,tam,precio,a.getCaracteristica());
+                a2.(getApplicationContext());
+
+                Toast.makeText(getApplicationContext(),res.getString(R.string.modificado_exitoso),
+                        Toast.LENGTH_SHORT).show();
+                limpiar();
+            }*/
 
 }

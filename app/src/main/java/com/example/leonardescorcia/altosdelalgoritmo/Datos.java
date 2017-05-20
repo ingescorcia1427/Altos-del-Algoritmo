@@ -48,5 +48,33 @@ public class Datos {
         return apartamentos;
     }
 
+    public static Apartamento buscarApartamentos(Context contexto,String nom){
+
+        //Declarar variables
+        SQLiteDatabase db;
+        Apartamento ap=null;
+        String sql, nomenclatura, piso, tamano, caracteristica, precio;
+
+        //Abrir conexión de lectura
+        ApartamentosSQLiteOpenHelper aux = new ApartamentosSQLiteOpenHelper(contexto, "DBApartamentos", null, 3);
+        db = aux.getReadableDatabase();
+
+        sql="Select * from Apartamentos where nomenclatura ='"+nom+"'";
+        Cursor c=db.rawQuery(sql,null);
+
+        //Recorrido de cursor
+        if(c.moveToFirst()) {
+                nomenclatura = c.getString(0);
+                piso = c.getString(1);
+                tamano = c.getString(2);
+                caracteristica = c.getString(3);
+                precio = c.getString(4);
+                ap = new Apartamento(nomenclatura, piso, tamano, caracteristica, precio);
+            }
+            db.close();
+            return ap;
+    }
+
+
 
 }

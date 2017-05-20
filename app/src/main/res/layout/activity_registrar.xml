@@ -91,6 +91,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@drawable/search"
+                    android:onClick="buscar"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -244,6 +245,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onClick="eliminar"
                         android:text="@string/eliminar"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -262,6 +264,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onClick="borrar"
                         android:text="@string/limpiar"
                         android:textAlignment="center"
                         android:textSize="24sp"
@@ -272,6 +275,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onClick="modificar"
                         android:text="@string/modificar"
                         android:textSize="24sp"
                         android:textStyle="bold" />
