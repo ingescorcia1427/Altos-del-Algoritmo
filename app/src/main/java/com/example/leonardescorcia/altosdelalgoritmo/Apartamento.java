@@ -80,4 +80,23 @@ public class Apartamento {
         //Cerrar conexión
         db.close();
     }
+
+
+    public void contarSB(Context contexto){
+        SQLiteDatabase db;
+        String sql;
+
+        //Abrir la conexión de la base de datos en modo escritura
+        ApartamentosSQLiteOpenHelper aux = new ApartamentosSQLiteOpenHelper(contexto, "DBApartamentos", null, 3);
+        db = aux.getWritableDatabase();
+
+        //Insertar forma 1
+        sql = "SELECT caracteristica count(Sombra) as Cantidad FROM Apartamentos GROUP BY caracteristica";
+
+        db.execSQL(sql);
+
+        //Cerrar conexión
+        db.close();
+    }
+
 }

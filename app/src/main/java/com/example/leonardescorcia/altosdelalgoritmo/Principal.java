@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -22,7 +21,7 @@ public class Principal extends AppCompatActivity {
 
         lstprincipal = (ListView)findViewById(R.id.lstprincipal);
         opc = getResources().getStringArray(R.array.opciones_principal);
-        adapter = new ArrayAdapter(this, R.layout.spinner_item_nomenclatura, opc);
+        adapter = new ArrayAdapter(this, R.layout.spinner_item_opciones, opc);
         lstprincipal.setAdapter(adapter);
 
         lstprincipal.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -38,13 +37,8 @@ public class Principal extends AppCompatActivity {
                         startActivity(i);
                         break;
                     case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        break;
+                        i = new Intent(Principal.this, Reportes.class);
+                        startActivity(i);
                 }
             }
         });

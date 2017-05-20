@@ -31,7 +31,7 @@ public class Listado_Apartamentos extends AppCompatActivity {
             TextView c5 = new TextView(this);
 
             c1.setText(" "+(i+1));
-            c2.setText(apartamentos.get(i).getNomenclatura() + "-" + apartamentos.get(i).getPiso());
+            c2.setText(apartamentos.get(i).getPiso() + "-" + apartamentos.get(i).getNomenclatura());
             c3.setText(apartamentos.get(i).getTamano() + " m2");
             c4.setText(apartamentos.get(i).getCaracteristica());
             c5.setText("$ "+ apartamentos.get(i).getPrecio() + ".00");

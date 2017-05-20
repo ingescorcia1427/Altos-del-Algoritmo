@@ -1,5 +1,6 @@
 package com.example.leonardescorcia.altosdelalgoritmo;
 
+import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,12 +10,15 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+
 public class Registrar extends AppCompatActivity {
     private EditText cajaNomenclatura, cajaTamano, cajaPrecio;
     private CheckBox chbBalcon, chbSombra;
-    private Spinner opc_nom;
+    private Spinner opc_piso;
     private String[] opc;
     private ArrayAdapter adapter;
+    private Resources res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +31,10 @@ public class Registrar extends AppCompatActivity {
         chbBalcon = (CheckBox)findViewById(R.id.chbBalcon);
         chbSombra = (CheckBox)findViewById(R.id.chbSombra);
 
-        opc_nom = (Spinner)findViewById(R.id.spnPiso);
+        opc_piso = (Spinner)findViewById(R.id.spnPiso);
         opc = getResources().getStringArray(R.array.opc_nomenclatura);
-        adapter = new ArrayAdapter(this, R.layout.spinner_item_nomenclatura, opc);
-        opc_nom.setAdapter(adapter);
+        adapter = new ArrayAdapter(this, R.layout.spinner_item_opciones, opc);
+        opc_piso.setAdapter(adapter);
     }
 
     public boolean validartodo (){
@@ -65,6 +69,21 @@ public class Registrar extends AppCompatActivity {
         return true;
     }
 
+    public boolean nomenclaturaExistente(View v){
+        ArrayList<Apartamento> apartamentos;
+        apartamentos= Datos.traerApartamento(getApplicationContext());
+        for (int i=0;i < apartamentos.size();i++){
+            if (apartamentos.get(i).getNomenclatura().equalsIgnoreCase(cajaNomenclatura.getText().toString()) &&
+                    apartamentos.get(i).getPiso().equalsIgnoreCase(opc_piso.getSelectedItem().toString().trim())){
+                new AlertDialog.Builder(this).setMessage(R.string.msj_nomenclatura_existe).show();
+                cajaNomenclatura.requestFocus();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public void limpiar(View v){
         cajaNomenclatura.setText("");
         cajaTamano.setText("");
@@ -78,27 +97,30 @@ public class Registrar extends AppCompatActivity {
         String nomenclatura, piso, tamano, caracteristica="", precio;
         Apartamento ap;
 
-        if (validartodo()){
-            nomenclatura = cajaNomenclatura.getText().toString();
-            piso = opc_nom.getSelectedItem().toString().trim();
-            tamano = cajaTamano.getText().toString();
-            precio = cajaPrecio.getText().toString();
+        if (nomenclaturaExistente(v)){
+            if (validartodo()){
+                nomenclatura = cajaNomenclatura.getText().toString();
+                piso = opc_piso.getSelectedItem().toString().trim();
+                tamano = cajaTamano.getText().toString();
+                precio = cajaPrecio.getText().toString();
 
-            if(chbBalcon.isChecked()){
-                caracteristica = getResources().getString(R.string.balcon) + ", ";
+                if(chbBalcon.isChecked()){
+                    caracteristica = getResources().getString(R.string.balcon) + ", ";
+                }
+
+                if(chbSombra.isChecked()){
+                    caracteristica = caracteristica + getResources().getString(R.string.sombra) + ", ";
+                }
+
+                caracteristica = caracteristica.substring(0, caracteristica.length()-2);
+                ap = new Apartamento(nomenclatura, piso, tamano, caracteristica, precio);
+                ap.guardar(getApplicationContext());
+
+                new AlertDialog.Builder(this).setMessage(R.string.registro_exitoso).show();
+                limpiar(v);
+                 }
             }
-
-            if(chbSombra.isChecked()){
-                caracteristica = caracteristica + getResources().getString(R.string.sombra) + ", ";
-            }
-
-            caracteristica = caracteristica.substring(0, caracteristica.length()-2);
-            ap = new Apartamento(nomenclatura, piso, tamano, caracteristica, precio);
-            ap.guardar(getApplicationContext());
-
-            new AlertDialog.Builder(this).setMessage(R.string.registro_exitoso).show();
-            limpiar(v);
         }
-    }
+
 
 }
